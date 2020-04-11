@@ -1,9 +1,13 @@
-import email
-import getpass
-import imaplib
+"""API."""
+
 import os
-import sys
+from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
+import shutil
 import logging
+
+from utils.download_mail import download_mail
+from utils.print_document import print_document
 
 # * ----- Logger set-up ----- *
 logging.basicConfig(
@@ -11,52 +15,53 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(name)-20s %(message)s",
     datefmt="%s-%m-%Y %H:%M:%S",
 )
-logger = logging.getLogger("[PRINT SERVER]")
+logger = logging.getLogger("[API SERVER]")
 
-# * ----- LOGIN INFO ----- *
-user = os.environ("MAIL_USER")
-password = os.environ("MAIL_PWD")
-try:
-    # * ----- SERVER SETUP ----- *
-    server = imaplib.IMAP4_SSL('imap.gmail.com')
-    server.login(user, password)
-    # * ----- GET DATA ----- *
-    server.select()
-    _, data = server.search(None, 'ALL')
 
-    # * ----- LOOP THROUGHT MAILS ----- *
-    for msgId in data[0].split():
-        # Fetch mails
-        typ, messageParts = server.fetch(msgId, '(RFC822)')
-        # Get message body
-        emailBody = messageParts[0][1]
-        # Decode UTF-8
-        raw_email_string = emailBody.decode('utf-8')
-        # Format data
-        mail = email.message_from_string(raw_email_string)
-        # Get Subject
-        email_subject = mail['subject']
-        # Loop in mail emlement to get files
-        for part in mail.walk():
-            # Skip unwanted stuff
-            if part.get_content_maintype() == 'multipart' or part.get_content_maintype() is None:
-                continue
-            
-            # Print mail content:
-            logger.debug(part.as_string())
-            
-            # Get file name if there are
-            file_name = part.get_filename()
-            
-            if file_name:
-                logger.info(f"Catched file: {file_name}")
-                # Define the path the save the file
-                file_path = os.path.join('mail_files', file_name)
-                # If the file doesn't already exist
-                if not os.path.isfile(file_path):
-                    # Save the file
-                    with open(file_path, 'wb') as f:
-                        f.write(part.get_payload(decode=True))
-                    logger.info(f"Downloaded file: {file_name}")
-except Exception as ex:
-    logger.error(ex)
+# * ---------- Create App --------- *
+app = Flask(__name__)
+CORS(app, support_credentials=True)
+
+
+# * --------- ROUTES --------- *
+@app.route('/', methods=['GET'])
+def index():
+    return "API online."
+
+
+@app.route('/get-documents', methods=['GET'])
+def get_document_route():
+    documment_list = [document_name for document_name in os.listdir("mail_files") if document_name[0] != "."]
+    return jsonify(documment_list)
+
+
+@app.route('/delete-document/<string:document_name>', methods=['GET'])
+def delete_document_doute(document_name: str):
+    try:
+        file_path = os.path.join("mail_files", document_name)
+        os.remove(file_path)
+
+    except FileNotFoundError as ex:
+        logger.error("[ERROR] Try to delete non-existing file: ")
+        logger.error(ex)
+    
+    except Exception as ex:
+        logger.error("[ERROR] Unknow error while deleting file: ")
+        logger.error(ex)
+    
+    documment_list = [document_name for document_name in os.listdir("mail_files") if document_name[0] != "."]
+    return jsonify(documment_list)
+
+
+@app.route('/print-document/<string:document_name>', methods=['GET'])
+def print_document_route(document_name: str):
+    document_path = os.path.join("mail_files", document_name)
+    try:
+        print_document(document_path)
+    except Exception as ex:
+        logger.error("[ERROR] Unknow error while printing: ")
+        logger.error(ex)
+
+
+@app.route('/rename-document/<string:document_name>&<string:document_new_name>', methods=['GET'])
+def rename_document_route(document_name: str, document_new_name: str):
