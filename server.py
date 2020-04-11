@@ -6,8 +6,9 @@ from flask_cors import CORS, cross_origin
 import shutil
 import logging
 
-from utils.download_mail import download_mail
+from utils.download_mail import fetch_and_dl_attachments
 from utils.print_document import print_document
+
 
 # * ----- Logger set-up ----- *
 logging.basicConfig(
@@ -27,6 +28,13 @@ CORS(app, support_credentials=True)
 @app.route('/', methods=['GET'])
 def index():
     return "API online."
+
+
+@app.route('/fetch-mails', methods=['GET'])
+def fetch_mails():
+    fetch_and_dl_attachments()
+    documment_list = [document_name for document_name in os.listdir("mail_files") if document_name[0] != "."]
+    return jsonify(documment_list)
 
 
 @app.route('/get-documents', methods=['GET'])
@@ -63,5 +71,9 @@ def print_document_route(document_name: str):
         logger.error(ex)
 
 
-@app.route('/rename-document/<string:document_name>&<string:document_new_name>', methods=['GET'])
-def rename_document_route(document_name: str, document_new_name: str):
+# * -------------------- RUN SERVER -------------------- *
+if __name__ == '__main__':
+    # * --- DEBUG MODE: --- *
+    app.run(host='127.0.0.1', port=5000, debug=True)
+    #  * --- DOCKER PRODUCTION MODE: --- *
+    # app.run(host='0.0.0.0', port=os.environ['PORT']) -> DOCKER
