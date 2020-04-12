@@ -3,10 +3,14 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   min-height: 100vh;
+  width: 100%;
 }
 
 #root{
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 li {
@@ -17,17 +21,11 @@ li {
   cursor: pointer;
 }
 
-.App {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-}
-
 .df-center-row {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .df-center-col {
@@ -35,16 +33,17 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .container{
   background-color: #fff;
-  margin: 30px 10px;
-  padding: 20px;
+  margin-bottom: 30px;
   -webkit-box-shadow: 0px 0px 9px 1px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 0px 9px 1px rgba(0,0,0,0.2);
   box-shadow: 0px 0px 9px 1px rgba(0,0,0,0.2);
   width: 70%;
+  padding: 40px;
 }
 @keyframes spin {
     from {
@@ -53,4 +52,22 @@ li {
     to {
         transform:rotate(360deg);
     }
+}
+
+.description{
+  margin: 40px 20%;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .container {
+    width: 100%;
+    padding: 0;
+  }
+  .title{
+    margin: 10px;
+  }
+  .description{
+  margin: 20px 10%;
+}
 }

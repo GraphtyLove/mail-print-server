@@ -11,7 +11,7 @@ const Header = () => {
     return (
         <header className="container">
             <h1 style={{ textAlign: "center" }}>Print server - Daniele's Home</h1>
-            <article style={{ margin: "40px 30%" }}>
+            <article className="description">
                 <p>
                     Bienvenue dans le serveur d'impression Daniele's home.
                     Vous pouvez télécharger les fichiers joins envoyé sur

@@ -5,7 +5,8 @@ const styleFooter = {
     marginTop: "auto",
     background: "#fff",
     width: "100vw",
-    textAlign: "center"
+    textAlign: "center",
+    boxShadow: "0px 0px 9px 1px rgba(0, 0, 0, 0.2)"
 }
 
 const Footer = () => {

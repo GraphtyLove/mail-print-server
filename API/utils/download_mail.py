@@ -52,7 +52,7 @@ def fetch_and_dl_attachments() -> None:
                 if file_name:
                     logger.info(f"Catched file: {file_name}")
                     # Define the path the save the file
-                    file_path = os.path.join('public/mail_files', file_name)
+                    file_path = os.path.join('static/mail_files', file_name)
                     # If the file doesn't already exist
                     if not os.path.isfile(file_path):
                         # Save the file

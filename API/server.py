@@ -19,7 +19,7 @@ logger = logging.getLogger("[API SERVER]")
 
 # * ---------- Create App --------- *
 app = Flask(__name__)
-CORS(app, support_credentials=True, static_url_path="static/")
+CORS(app)
 
 
 # * --------- ROUTES --------- *
@@ -30,7 +30,7 @@ def index():
 
 @app.route('/fetch-mails', methods=['GET'])
 def fetch_mails():
-    document_list = [document_name for document_name in os.listdir("mail_files") if document_name[0] != "."]
+    document_list = [document_name for document_name in os.listdir("static/mail_files") if document_name[0] != "."]
     return jsonify(document_list)
 
 
@@ -42,20 +42,20 @@ def download_mails():
         logger.error("[ERROR] Unknow error while deleting file: ")
         logger.error(ex)
 
-    document_list = [document_name for document_name in os.listdir("mail_files") if document_name[0] != "."]
+    document_list = [document_name for document_name in os.listdir("static/mail_files") if document_name[0] != "."]
     return jsonify(document_list)
 
 
 @app.route('/get-documents', methods=['GET'])
 def get_document_route():
-    document_list = [document_name for document_name in os.listdir("mail_files") if document_name[0] != "."]
+    document_list = [document_name for document_name in os.listdir("static/mail_files") if document_name[0] != "."]
     return jsonify(document_list)
 
 
 @app.route('/delete-document/<string:document_name>', methods=['GET'])
 def delete_document_doute(document_name: str):
     try:
-        file_path = os.path.join("mail_files", document_name)
+        file_path = os.path.join("static/mail_files", document_name)
         os.remove(file_path)
 
     except FileNotFoundError as ex:
@@ -66,13 +66,13 @@ def delete_document_doute(document_name: str):
         logger.error("[ERROR] Unknow error while deleting file: ")
         logger.error(ex)
     
-    document_list = [document_name for document_name in os.listdir("mail_files") if document_name[0] != "."]
+    document_list = [document_name for document_name in os.listdir("static/mail_files") if document_name[0] != "."]
     return jsonify(document_list)
 
 
 @app.route('/print-document/<string:document_name>', methods=['GET'])
 def print_document_route(document_name: str):
-    document_path = os.path.join("mail_files", document_name)
+    document_path = os.path.join("static/mail_files", document_name)
     try:
         print_document(document_path)
     except Exception as ex:

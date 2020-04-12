@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './App.css';
 
 // * ----- Compenents ----- *
@@ -8,11 +8,11 @@ import Footer from './components/Footer/Footer'
 
 function App() {
     return (
-        <div className="App">
+        <Fragment>
             <Header />
             <FileList />
             <Footer />
-        </div>
+        </Fragment>
     );
 }
 

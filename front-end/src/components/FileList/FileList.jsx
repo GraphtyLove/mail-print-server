@@ -33,8 +33,8 @@ const FileList = () => {
 
     return (
         <main className="container">
-            <section className="df-center-row">
-                <h2>List des fichiers:</h2>
+            <section className="df-center-row title">
+                <h2 style={{ marginRight: 'auto' }}>List des fichiers:</h2>
                 <CachedSharpIcon
                     fontSize="large"
                     className="pointer reverse"
@@ -42,7 +42,6 @@ const FileList = () => {
                     style={
                         isFetching
                             ? {
-                                marginLeft: "auto",
                                 color: "green",
                                 animationName: "spin",
                                 animationDuration: "5000ms",
@@ -50,7 +49,7 @@ const FileList = () => {
                                 animationTimingFunction: "linear",
                             }
                             : {
-                                marginLeft: "auto",
+                                color: 'primary',
                             }
                     }
                     onClick={fetchAndDlFiles}

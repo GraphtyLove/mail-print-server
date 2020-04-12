@@ -19,11 +19,12 @@
 *.env.production.local
 front-end/src/components/secret/secret.js
 API/.envrc
-API/public/mail_files/*
-API/public/thumbnails/*
+API/static/mail_files/*
+API/static/thumbnails/*
 *pycache*
 *.idea
 API/env
+*.vscode
 
 *npm-debug.log*
 *yarn-debug.log*
