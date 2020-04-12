@@ -20,7 +20,7 @@
 front-end/src/components/secret/secret.js
 API/.envrc
 API/mail_files/*
-*pycache*
+front-end/utils/__pycache__/*
 *.idea
 API/env
 
