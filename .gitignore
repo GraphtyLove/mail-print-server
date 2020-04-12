@@ -19,7 +19,8 @@
 *.env.production.local
 front-end/src/components/secret/secret.js
 API/.envrc
-API/mail_files/*
+API/public/mail_files/*
+API/public/thumbnails/*
 *pycache*
 *.idea
 API/env
