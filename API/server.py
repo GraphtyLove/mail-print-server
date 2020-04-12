@@ -6,7 +6,7 @@ from flask_cors import CORS, cross_origin
 import logging
 
 from utils.download_mail import fetch_and_dl_attachments
-from utils import print_document
+from utils.print_document import print_document
 
 
 # * ----- Logger set-up ----- *
@@ -40,7 +40,12 @@ def fetch_mails():
 @cross_origin(supports_credentials=True)
 @app.route('/dl-mails', methods=['GET'])
 def download_mails():
-    fetch_and_dl_attachments()
+    try:
+        fetch_and_dl_attachments()
+    except Exception as ex:
+        logger.error("[ERROR] Unknow error while deleting file: ")
+        logger.error(ex)
+
     document_list = [document_name for document_name in os.listdir("mail_files") if document_name[0] != "."]
     return jsonify(document_list)
 
@@ -77,12 +82,10 @@ def print_document_route(document_name: str):
     document_path = os.path.join("mail_files", document_name)
     try:
         print_document(document_path)
-        return jsonify("OK")
-    
     except Exception as ex:
-        logger.error("[ERROR] Unknow error while printing: ")
+        logger.error("[ERROR] Unknow error while deleting file: ")
         logger.error(ex)
-        return "FAIL"
+    return jsonify("OK")
 
 
 # * -------------------- RUN SERVER -------------------- *

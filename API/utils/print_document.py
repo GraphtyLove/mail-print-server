@@ -1,7 +1,7 @@
 """File to print a document."""
 import subprocess
 import logging
-
+import os
 # * ----- Logger set-up ----- *
 logger = logging.getLogger("[PRINT SERVER]")
 

@@ -37,7 +37,7 @@ const FileList = () => {
                 <h2>List des fichiers:</h2>
                 <CachedSharpIcon
                     fontSize="large"
-                    className="pointer"
+                    className="pointer reverse"
                     color="primary"
                     style={
                         isFetching
