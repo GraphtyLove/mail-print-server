@@ -22,7 +22,7 @@ const FileList = () => {
         console.log('fetch...')
         fetch('http://127.0.0.1:5000/fetch-mails')
             .then(res => res.json())
-            .then(data => setFiles(data))
+            .then(data => setTimeout(() => setFiles(data), 1000))
             .catch(err => setFetchError(err))
     }
 
@@ -49,7 +49,7 @@ const FileList = () => {
                                 animationTimingFunction: "linear",
                             }
                             : {
-                                color: 'primary',
+                                color: '#3F51B5',
                             }
                     }
                     onClick={fetchAndDlFiles}

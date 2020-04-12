@@ -48,14 +48,20 @@ li {
 @keyframes spin {
     from {
         transform:rotate(0deg);
+        transform: "scaleX(-1)",
     }
     to {
         transform:rotate(360deg);
+        transform: "scaleX(-1)",
     }
 }
 
 .description{
   margin: 40px 20%;
+}
+
+.reverse{
+  transform: scaleX(-1);
 }
 
 @media only screen and (max-width: 768px) {
