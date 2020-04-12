@@ -8,7 +8,6 @@ import logging
 from utils.download_mail import fetch_and_dl_attachments
 from utils.print_document import print_document
 
-
 # * ----- Logger set-up ----- *
 logging.basicConfig(
     level="INFO",
@@ -20,24 +19,21 @@ logger = logging.getLogger("[API SERVER]")
 
 # * ---------- Create App --------- *
 app = Flask(__name__)
-CORS(app, support_credentials=True)
+CORS(app, support_credentials=True, static_url_path="static/")
 
 
 # * --------- ROUTES --------- *
-@cross_origin(supports_credentials=True)
 @app.route('/', methods=['GET'])
 def index():
     return "API online."
 
 
-@cross_origin(supports_credentials=True)
 @app.route('/fetch-mails', methods=['GET'])
 def fetch_mails():
     document_list = [document_name for document_name in os.listdir("mail_files") if document_name[0] != "."]
     return jsonify(document_list)
 
 
-@cross_origin(supports_credentials=True)
 @app.route('/dl-mails', methods=['GET'])
 def download_mails():
     try:
@@ -50,14 +46,12 @@ def download_mails():
     return jsonify(document_list)
 
 
-@cross_origin(supports_credentials=True)
 @app.route('/get-documents', methods=['GET'])
 def get_document_route():
     document_list = [document_name for document_name in os.listdir("mail_files") if document_name[0] != "."]
     return jsonify(document_list)
 
 
-@cross_origin(supports_credentials=True)
 @app.route('/delete-document/<string:document_name>', methods=['GET'])
 def delete_document_doute(document_name: str):
     try:
@@ -76,7 +70,6 @@ def delete_document_doute(document_name: str):
     return jsonify(document_list)
 
 
-@cross_origin(supports_credentials=True)
 @app.route('/print-document/<string:document_name>', methods=['GET'])
 def print_document_route(document_name: str):
     document_path = os.path.join("mail_files", document_name)

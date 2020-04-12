@@ -32,6 +32,16 @@ const FileItem = props => {
             .then(setFetchError(false))
             .catch(() => setFetchError(true))
     }
+    // * ----- File functions ----- *
+    const fileNameWithoutExtension = fileName => {
+        // split in an array in each .
+        const fileNameSplitted = fileName.split('.')
+        // Delete the last element of the array
+        fileNameSplitted.pop()
+        // Join the rest of the array in a string
+        const filenameWihtoutExtension = fileNameSplitted.join('')
+        return filenameWihtoutExtension
+    }
 
     return (
         <li
@@ -39,12 +49,18 @@ const FileItem = props => {
             style={styleFileBorder}
         >
             <p style={styleFilename}> {props.fileName} </p>
-            {fetchError
-                && <p
-                    style={{ color: 'red', marginLeft: "auto" }}
-                >
-                    <b>Erreur de suppression/impression. Veuillez réessayer...</b>
-                </p>}
+
+            {
+                fetchError
+                    && <p
+                        style={{ color: 'red', marginLeft: "auto" }}
+                    >
+                        <b>Erreur de suppression/impression. Veuillez réessayer...</b>
+                    </p>
+            }
+            
+            <img src={`http://127.0.0.1:5000/static/thumnail/${fileNameWithoutExtension(props.fileName)}.jpg`}
+
             <ImageSearchSharpIcon
                 fontSize="large"
                 className="pointer"

@@ -5,6 +5,8 @@ import imaplib
 import os
 import logging
 
+from utils.convert_jpg import convert_to_jpg
+
 # * ----- Logger set-up ----- *
 logger = logging.getLogger("[DOWNLOAD SERVER]")
 
@@ -50,12 +52,15 @@ def fetch_and_dl_attachments() -> None:
                 if file_name:
                     logger.info(f"Catched file: {file_name}")
                     # Define the path the save the file
-                    file_path = os.path.join('mail_files', file_name)
+                    file_path = os.path.join('public/mail_files', file_name)
                     # If the file doesn't already exist
                     if not os.path.isfile(file_path):
                         # Save the file
                         with open(file_path, 'wb') as f:
                             f.write(part.get_payload(decode=True))
                         logger.info(f"Downloaded file: {file_name}")
+                        # Convert the file to jpg and store it in the thumbnail folder
+                        convert_to_jpg(file_name)
+
     except Exception as ex:
         logger.error(ex)
