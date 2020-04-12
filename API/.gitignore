@@ -1,6 +1,0 @@
-.envrc
-.DS_Store
-../.idea
-*.swp
-mail_files/*
-*__pycache__*
