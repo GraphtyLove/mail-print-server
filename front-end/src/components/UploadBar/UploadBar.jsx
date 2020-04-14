@@ -30,7 +30,8 @@ const UploadBar = props => {
             method: 'POST',
             // Add headers to avoid cors?
             body: data
-        })
+        }).then(res => res.json())
+            .then(data => setIsFileUploaded(data))
             .then(() => props.fetchFiles())
             .catch(() => setIsFileUploaded('fail'))
     }
@@ -39,8 +40,8 @@ const UploadBar = props => {
     const classes = useStyles();
     return (
         <section className="container df-center-col">
-            <h2 style={{ marginRight: 'auto' }}>Uploader un fichier</h2>
-            <div>
+            <h2 className="title" style={{ marginRight: 'auto' }}>Uploader un fichier</h2>
+            <div style={{ marginBottom: '20px' }}>
                 <input
                     accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
                             text/plain, application/pdf, image/*"
@@ -56,8 +57,8 @@ const UploadBar = props => {
                     </Button>
                 </label>
             </div>
-            {(isFileUploaded === 'success') && <p>Fichier uploadé !</p>}
-            {(isFileUploaded === 'fail') && <p>Erreur d'envoie...</p>}
+            {(isFileUploaded === 'success') && <p style={{ color: 'green' }}><i>Fichier uploadé!</i></p>}
+            {(isFileUploaded === 'fail') && <p style={{ color: 'red' }}><i>Erreur d'envoie...</i></p>}
         </section>
     )
 }

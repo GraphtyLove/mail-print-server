@@ -8,7 +8,8 @@ import SECRET from '../secret/secret'
 const styleFilename = {
     fontSize: "1em",
     fontWeight: "bold",
-    marginRight: 'auto'
+    marginRight: 'auto',
+    marginLeft: '20px'
 }
 const styleFileBorder = {
     borderBottom: "1px solid rgba(114, 114, 114, 0.4",

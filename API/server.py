@@ -96,7 +96,7 @@ def print_document_route(file_folder: str, document_name: str):
 
 @app.route('/upload-documents', methods=['GET', 'POST'])
 def upload_documents():
-    response = "error"
+    response = "fail"
     file = request.files['file']
     if request.method == 'POST' and file.filename != '':
         if file:
