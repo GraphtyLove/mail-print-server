@@ -1,6 +1,6 @@
 import React from 'react'
 // * ----- Components ----- *
-import { MAIL_ADDRESS } from '../secret/secret'
+import SECRET from '../secret/secret'
 
 const Header = () => {
     // Style
@@ -18,8 +18,8 @@ const Header = () => {
                     l'adresse mail:
                 <b style={redImportant}>
                         {
-                            MAIL_ADDRESS
-                                ? MAIL_ADDRESS
+                            SECRET.mail
+                                ? SECRET.mail
                                 : "Pas d'adresse mail définie dans la variable d'environnement $MAIL_ADDRESS"
                         }
                     </b>.

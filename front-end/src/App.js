@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import './App.css';
-import SERVER_IP from './components/secret/secret'
+import SECRET from './components/secret/secret'
 
 // * ----- Components ----- *
 import Header from './components/Header/Header'
@@ -17,14 +17,15 @@ function App() {
     // * ----- Fetch: ----- *
     const fetchFiles = () => {
         console.log('fetch...')
-        fetch(`http://${SERVER_IP}/fetch-documents`)
+        fetch(`http://${SECRET.ip}/fetch-documents`)
             .then(res => res.json())
             .then(data => setTimeout(() => setFiles(data), 1000))
             .catch(err => setFetchError(err))
     }
     const fetchAndDlFiles = () => {
         setIsFetching(true)
-        fetch(`http://${SERVER_IP}/dl-mails`)
+        console.log('DL... ', SECRET.ip)
+        fetch(`http://${SECRET.ip}/dl-mails`)
             .then(res => res.json())
             .then(data => { setFiles(data) })
             .then(() => setIsFetching(false))

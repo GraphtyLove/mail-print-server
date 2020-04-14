@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import SERVER_IP from '../secret/secret'
+import SECRET from '../secret/secret'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -26,7 +26,7 @@ const UploadBar = props => {
         console.log('file to send: ', event.target.files[0])
         let data = new FormData()
         data.append('file', event.target.files[0])
-        fetch(`http://${SERVER_IP}/upload-documents`, {
+        fetch(`http://${SECRET.ip}/upload-documents`, {
             method: 'POST',
             // Add headers to avoid cors?
             body: data

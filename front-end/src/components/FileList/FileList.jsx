@@ -8,10 +8,8 @@ const FileList = props => {
     // * ----- States: ----- *
     const [showMails, setShowMails] = useState(false)
 
-    // Use effects
-    useEffect(() => {
-        props.fetchAndDlFiles()
-    }, [])
+    // eslint-disable-next-line
+    useEffect(() => props.fetchAndDlFiles(), [])
 
     return (
         <main className="container">
