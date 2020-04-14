@@ -53,13 +53,7 @@ const UploadBar = props => {
                 <label htmlFor="contained-button-file">
                     <Button variant="contained" color="primary" component="span">
                         <CloudUploadIcon style={{ marginRight: '10px' }} /> Upload
-        </Button>
-                </label>
-                <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
-                <label htmlFor="icon-button-file">
-                    <IconButton color="primary" aria-label="upload picture" component="span">
-                        <PhotoCamera />
-                    </IconButton>
+                    </Button>
                 </label>
             </div>
             {(isFileUploaded === 'success') && <p>Fichier uploadé !</p>}
