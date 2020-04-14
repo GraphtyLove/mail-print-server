@@ -2,33 +2,15 @@ import React, { useState, useEffect } from 'react'
 // * ----- Components ----- *
 import FileItem from './FileItem'
 import CachedSharpIcon from '@material-ui/icons/CachedSharp';
+import Switch from '@material-ui/core/Switch';
 
-const FileList = () => {
+const FileList = props => {
     // * ----- States: ----- *
-    const [files, setFiles] = useState([])
-    const [fetchError, setFetchError] = useState()
-    const [isFetching, setIsFetching] = useState(false)
-
-    // * ----- Fetch functions ----- *
-    const fetchAndDlFiles = () => {
-        setIsFetching(true)
-        fetch('http://127.0.0.1:5000/dl-mails')
-            .then(res => res.json())
-            .then(data => setFiles(data))
-            .then(() => setIsFetching(false))
-            .catch(err => setFetchError(err))
-    }
-    const fetchFiles = () => {
-        console.log('fetch...')
-        fetch('http://127.0.0.1:5000/fetch-mails')
-            .then(res => res.json())
-            .then(data => setTimeout(() => setFiles(data), 1000))
-            .catch(err => setFetchError(err))
-    }
+    const [showMails, setShowMails] = useState(false)
 
     // Use effects
     useEffect(() => {
-        fetchAndDlFiles()
+        props.fetchAndDlFiles()
     }, [])
 
     return (
@@ -38,9 +20,8 @@ const FileList = () => {
                 <CachedSharpIcon
                     fontSize="large"
                     className="pointer reverse"
-                    color="primary"
                     style={
-                        isFetching
+                        props.isFetching
                             ? {
                                 color: "green",
                                 animationName: "spin",
@@ -52,24 +33,48 @@ const FileList = () => {
                                 color: '#3F51B5',
                             }
                     }
-                    onClick={fetchAndDlFiles}
+                    onClick={props.fetchAndDlFiles}
                 />
             </section>
             <section>
-                <ul>
+                <div className="df-center-row">
+                    <h3>
+                        Envoyé par mail
+                    <Switch
+                            checked={showMails}
+                            onChange={() => setShowMails(!showMails)}
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                    Uploadé sur le site
+                </h3>
+                </div>
 
-                    {fetchError
+                <ul>
+                    {props.CachedSharpIconfetchError
                         && <p style={{ color: 'red', textAlign: 'center' }}>
                             Error while fetching the API...
                         </p>}
-                    {!fetchError
-                        && files
-                        && files.length > 0
-                        && files.map(fileName => <FileItem
+                    {!showMails
+                        && props.files.mails
+                        && props.files.mails.length > 0
+                        && props.files.mails.map(fileName => <FileItem
                             fileName={fileName}
-                            fetchFiles={() => fetchFiles()}
+                            fetchFiles={() => props.fetchFiles()}
+                            fileFolder="mail_files"
                             key={fileName}
                         />)}
+                    {showMails
+                        && props.files.uploads
+                        && props.files.uploads.length > 0
+                        && props.files.uploads.map(fileName => <FileItem
+                            fileName={fileName}
+                            fetchFiles={() => props.fetchFiles()}
+                            fileFolder="upload_files"
+                            key={fileName}
+                        />)}
+                </ul>
+                <ul>
+
                 </ul>
             </section>
         </main>

@@ -2,6 +2,7 @@
 import os
 import logging
 import subprocess
+from PIL import Image
 
 # * ----- Logger set-up ----- *
 logger = logging.getLogger("[CONVERT SERVER]")
@@ -23,15 +24,16 @@ def reduce_img_quality(image_path: str, new_path: str = None) -> None:
     img.save(new_path, "JPEG", optimize=True)
 
 
-def convert_to_jpg(file_name: str):
+def convert_to_jpg(file_folder: str, file_name: str):
     """
     Function to convert a file to jpg.
 
     This function is used to convert files to jpg to show a thumbnail in the UI.
+    :param file_folder: A string with the folder name of the file to convert.
     :param file_path: A string with the file name of the file to convert.
     """
     thumbnail_name = os.path.splitext(file_name)[0] + ".jpg"
-    file_path = os.path.join("static/mail_files/", file_name)
+    file_path = os.path.join(f"static/{file_folder}/", file_name)
     new_path = os.path.join("static/thumbnails/", thumbnail_name)
     file_extension = os.path.splitext(file_name)[-1]
 

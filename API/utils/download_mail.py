@@ -60,7 +60,7 @@ def fetch_and_dl_attachments() -> None:
                             f.write(part.get_payload(decode=True))
                         logger.info(f"Downloaded file: {file_name}")
                         # Convert the file to jpg and store it in the thumbnail folder
-                        convert_to_jpg(file_name)
+                        convert_to_jpg("mail_files", file_name)
 
     except Exception as ex:
         logger.error(ex)
