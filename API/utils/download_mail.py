@@ -11,8 +11,8 @@ from utils.convert_jpg import convert_to_jpg
 logger = logging.getLogger("[DOWNLOAD SERVER]")
 
 # * ----- LOGIN INFO ----- *
-user = os.environ.get("MAIL_USER", "")
-password = os.environ.get("MAIL_PWD", "")
+user = os.environ["MAIL_USER"]
+password = os.environ["MAIL_PWD"]
 
 
 def fetch_and_dl_attachments() -> None:

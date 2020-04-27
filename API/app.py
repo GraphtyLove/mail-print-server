@@ -110,6 +110,6 @@ def upload_documents():
 # * -------------------- RUN SERVER -------------------- *
 if __name__ == '__main__':
     # * --- DEBUG MODE: --- *
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
     #  * --- DOCKER PRODUCTION MODE: --- *
     # app.run(host='213.189.172.207', port=os.environ['PORT']) -> DOCKER
