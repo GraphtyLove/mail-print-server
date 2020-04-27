@@ -13,7 +13,7 @@ const styleFilename = {
 }
 const styleFileBorder = {
     borderBottom: "1px solid rgba(114, 114, 114, 0.4",
-    borderRadius: "3px",
+    borderRadius: "1px",
 }
 const styleThumbnail = {
     height: 'auto',
